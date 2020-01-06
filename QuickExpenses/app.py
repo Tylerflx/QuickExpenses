@@ -9,14 +9,14 @@ print('1. Search')
 # option 2 enter new data
 print('2. Enter')
 # display all in file
-# print ('3. Statements')
+print ('3. Statements')
 
 choice = input('Enter your option: ')
 # switch case replacements
 if choice == '1':
     # user select 1
     # user enter date to search
-    date = input('Enter date to search with this format yyyy/m/d :')
+    date = input('Enter date to search with this format mm/dd/yyyy :')
     # file open to read
     file = open('track.txt', 'r')
     # find info
@@ -46,7 +46,7 @@ elif choice == '2':
         today = datetime.today()
         for attr in ['year', 'month', 'day', 'hour', 'minute', 'second', 'microsecond']:
             getattr(today, attr)
-        date = str(today.month) + '/' + str(today.day) + '/' + str(today.year)
+        date = '0' + str(today.month) + '/' + '0' + str(today.day) + '/' + str(today.year)
         # save all the lines to new_f
         new_f = file.readlines()
         # seek to the top position
@@ -65,20 +65,19 @@ elif choice == '2':
                 # save the old amount to update
                 sp_data = line.split()
                 old_amt = sp_data[1]
-                print(sp_data)
                 # ask new data
                 new_amt = input('Enter the amount: ')
                 # calculate the amount
                 cal_amt = int(old_amt) + int(new_amt)
                 line = date + '\t' + str(cal_amt)
-                file.write(line)
+                file.write(line + '\n')
         file.truncate()
         if count == 0:
-            date = str(today.month) + '/' + str(today.day) + '/' + str(today.year)
-            amount = input('Enter amount2: ')
+            date = '0'+str(today.month) + '/' + '0' + str(today.day) + '/' + str(today.year)
+            amount = input('Enter amount: ')
             file = open('track.txt', 'a')
             # write it to file
-            file.write('\n')
+            #file.write('\n')
             file.write(date + '\t' + amount + '\n')
             # close file
             file.close()
@@ -87,7 +86,7 @@ elif choice == '2':
     if choice == '2':
         # if there is not, get the date and let user input amount
         # get date from user
-        date = input('Enter date to search with this format dd/mm/yyyy :')
+        date = input('Enter date to search with this format mm/dd/yyyy: ')
         count = 0
         # open file to read
         file = open('track.txt', 'r+')
@@ -109,21 +108,24 @@ elif choice == '2':
                 # save the old amount to update
                 sp_data = line.split()
                 old_amt = sp_data[1]
-                print(sp_data)
                 # ask new data
-                new_amt = input('Enter the amount1: ')
+                new_amt = input('Enter the amount: ')
                 # calculate the amount
                 cal_amt = int(old_amt) + int(new_amt)
                 line = date + '\t' + str(cal_amt)
                 file.write(line)
         file.truncate()
         if count == 0:
-            amount = input('Enter amount2: ')
+            amount = input('Enter amount: ')
             file = open('track.txt', 'a')
             # write it to file
-            file.write('\n')
+            #file.write('\n')
             file.write(date + '\t' + amount + '\n')
             # close file
             file.close()
+elif choice == '3':
+    with open('track.txt', 'r') as file:
+        for line in file:
+            print(line)
 else:
     print('try again')
